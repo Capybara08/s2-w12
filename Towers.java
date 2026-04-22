@@ -10,22 +10,31 @@ public class Towers{
       for(int x = numDiscs; x > 0; x--){
           left.add(x);
       }
-      solve(numDiscs, left, middle, right);
-      printTowers(numDiscs);
+
+        solve(numDiscs, left, middle, right);
+        printTowers(numDiscs);
+      
   }
 
   //YOU::you write this -- simple ArrayList move the last item of l to r
-  private void moveFromLeftToRight(ArrayList<Integer> l,  ArrayList<Integer> r){
-
+  private void moveOnePoleToOther(ArrayList<Integer> poleA,  ArrayList<Integer> poleC){
+    poleC.add(poleA.get(poleA.size()-1));
   }
 
   //YOU:: recursive moment -- base case? recursive case?
-  public void solve(int discs, ArrayList<Integer> l, ArrayList<Integer> m, ArrayList<Integer> r){
-      if(discs == 1){
-        moveFromLeftToRight(l, r);
+  public void solve(int discs, ArrayList<Integer> poleA, ArrayList<Integer> poleB, ArrayList<Integer> poleC){
+    // until discs = 1 we keep recursing...  
+    
+    if(discs == 1){
+        moveOnePoleToOther(poleA, poleC); // 
       } else{
         //recursive moment -- this three lines! and BIG HINT: two recursive calls to this method solve
         //as well as another call to moveFromLeftToRight
+
+        solve(discs-1, poleA, poleC, poleB);
+        moveOnePoleToOther(poleA, poleC);
+        solve(discs-1, poleB, poleA, poleC);
+      
       }     
   }
 
@@ -44,5 +53,10 @@ public class Towers{
     System.out.println("Middle: " + middleT);
     System.out.println("Right: " + rightT);
 
+  }
+
+  public static void main(String[] args) {
+    Towers t = new Towers();
+    
   }
 }
